@@ -41,7 +41,7 @@
      (and userRight? (= buttonQueueCount seqCount)) (+ 2 2) ; OMG AWFUL - this forces return of true
                                                             ; user did full sequence, so ready for next note 
      (and (not userRight?) (> buttonQueueCount 0)) (println "user wrong") ; user hit a wrong button, which will start new game
-     :else  (recur currSeq)))))  ; keep checking, user not done w/ sequence but right so far so recall check_guess
+     :else  (recur currSeq))))  ; keep checking, user not done w/ sequence but right so far so recall check_guess
                                         
 
 (defn play_sound
@@ -202,3 +202,4 @@
       (.setVisible true))
     (startgame buttonlist msg_display player track)))
 
+(-main)
