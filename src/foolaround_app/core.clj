@@ -8,44 +8,28 @@
    (java.awt.event ActionListener MouseAdapter))
   (:gen-class))
 
-
-
-                                        ; vector of immutable  properties for sound and color of the "buttons"
-                                        ; used by the 2 functions that play sound 
-
-(def button_prop_COLOR [Color/BLUE Color/RED Color/GREEN Color/YELLOW Color/MAGENTA])
+(def button_prop_COLOR
+  "vector of immutable  properties for sound and color of the buttons
+   used by the 2 functions that play sound"
+  [Color/BLUE Color/RED Color/GREEN Color/YELLOW Color/MAGENTA])
 (def button_prop_noteAndInst [[106 48][106 52][106 55][85 40]])
-
-
-
-;; STATE THAT CHANGES IS HERE:
-;; ---------------------------------------------------
-                                        ;---------------------------------------------------
-
 
 (def button_queue
   "holds the button click events (as integers 1-3)"
   (atom [])) 
-
-
 
 (defn update_queue [numToAdd]
   (if (> numToAdd 0)
     (swap! button_queue conj numToAdd)
     (reset! button_queue [])))
 
-; ------------------CHECK USERS GUESS (clicks) ------
-                                      ; 
-
 (defn check_guess
   "as soon as a sequence plays, this starts looping (recursive)
    looking at the button click events, comparing to current actual game sequence"
   [currSeq]
-  
-                                        ; make a copy/deref the button queue
-                                        ; shorten it in case it's longer than the current Sequence 
-                                        ; then see if the button queue matches the current sequence
-
+;; make a copy/deref the button queue
+;; shorten it in case it's longer than the current Sequence 
+;; then see if the button queue matches the current sequence
   (let [copyOfButtonQueue (deref button_queue)
         seqCount (count currSeq)
         shorterButtonQueue (take seqCount copyOfButtonQueue)
@@ -97,8 +81,6 @@
   (Thread/sleep 160)  ; this determines how long the button "lights"
   (.setBackground button Color/darkGray))
 
-
-
 (defn main_game_loop
    "most of the game is here -- it is recursive, it basically:
     play a sequence of notes then call check guess which keeps checking the user's event queue 
@@ -145,12 +127,6 @@
   (Thread/sleep 2000)
   (.setText msg_display "Watch and listen!")
   (main_game_loop buttonlist msg_display [] player track))
-                                        ;--------------------------------------------------  
-
-
-
-
-                                        ;--------------------MAIN JUST CONSTRUCTS GUI AND SEQUENCER --------------------------------
 
 (defn -main  [& args]
   (println "in main")
